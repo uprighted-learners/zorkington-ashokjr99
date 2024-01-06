@@ -27,7 +27,7 @@ let classroomInventory = {
       // check that the player has a key before unlocking
       if ("classroom_key" in playerInventory) {
         this.locked = false;
-        console.log("Your key works!");
+        console.log("Your key works! The door is unlocked.");
       } else {
         console.log("You do not have a key!");
       }
@@ -44,12 +44,12 @@ let classroomInventory = {
     look() {
       console.log(`${this.description}`);
     },
-    take(item) {
-      if (item.take === true) {
-        this[item.key] = item;
-        console.log(`You have taken the ${item}.`);
-      }
-    },
+    // take(item) {
+    //   if (item.take === true) {
+    //     this[item.key] = item;
+    //     console.log(`You have taken the ${item}.`);
+    //   }
+    // },
   },
   windows: {
     name: "Classroom Windows",
@@ -66,8 +66,9 @@ let classroomInventory = {
     name: "Teacher's Desk",
     description:
       "It looks like an instructor's desk. There is a key on top of it.",
-    look() {
+    interact() {
       console.log(`${this.description}`);
+      playerInventory.push(currentroomInv.classroom_key);
     },
   },
   description:
@@ -173,33 +174,23 @@ async function start() {
     currentRoom.description;
     let currentroomInv = roomInventory[currentRoom];
     let answer = await ask(currentroomInv.description);
-    let action = keyAdd(answer);
-    console.log(action);
+    let action = act(answer);
+    let objectUse = keyAdd(answer);
     // let questionToPlayer = await ask("What do you want to do?");
-    if (answer === "interact door" || answer === "i door") {
-      currentroomInv.door.interact();
-    } else if (answer === "look door" || answer === "l door") {
-      currentroomInv.door.look();
-    } else if (
-      answer === "interact windows" ||
-      answer === "interact window" ||
-      answer === "i window" ||
-      answer === "i windows"
-    ) {
-      currentroomInv.windows.interact();
-    }
+    if (action === "interact" || action === "i") {
+      currentroomInv[objectUse].interact();
+    } else if (action === "look" || action === "l") {
+      currentroomInv[objectUse].look();
 
-    if (answer === "interact desk" || "i desk") {
-      currentroomInv.desk.look();
-      if (answer === "take key" || answer === "t key") {
-        currentroomInv.classroom_key.take();
-        playerInventory.push(currentroomInv.classroom_key);
-        delete currentroomInv.classroom_key;
+      if (answer === "interact desk" || "i desk") {
+        currentroomInv.desk.look();
+        if (answer === "take key" || answer === "t key") {
+          currentroomInv.classroom_key.take();
+          playerInventory.push(currentroomInv.classroom_key);
+        }
       }
     }
   }
-  console.log("Now write your code to make this work!");
-  process.exit();
 }
 
 function myRoom(newRoom) {
@@ -220,12 +211,14 @@ function myRoom(newRoom) {
   }
 }
 
-function keyAdd(add) {
+function act(add) {
   let split = add.split(" ");
   let action = split[0];
   return action;
 }
 
-// let stringy = "interact door";
-
-// console.log(keyAdd(stringy));
+function keyAdd(add) {
+  let split = add.split(" ");
+  let action = split[1];
+  return action;
+}
