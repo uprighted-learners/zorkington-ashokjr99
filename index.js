@@ -68,7 +68,8 @@ let classroomInventory = {
       "It looks like an instructor's desk. There is a key on top of it.",
     interact() {
       console.log(`${this.description}`);
-      playerInventory.push(currentroomInv.classroom_key);
+      playerInventory.classroom_key;
+      console.log("You have added the key to your inventory");
     },
   },
   description:
@@ -179,16 +180,17 @@ async function start() {
     // let questionToPlayer = await ask("What do you want to do?");
     if (action === "interact" || action === "i") {
       currentroomInv[objectUse].interact();
+      console.log(playerInventory);
     } else if (action === "look" || action === "l") {
       currentroomInv[objectUse].look();
 
-      if (answer === "interact desk" || "i desk") {
-        currentroomInv.desk.look();
-        if (answer === "take key" || answer === "t key") {
-          currentroomInv.classroom_key.take();
-          playerInventory.push(currentroomInv.classroom_key);
-        }
-      }
+      // if (answer === "interact desk" || "i desk") {
+      //   currentroomInv.desk.look();
+      //   if (answer === "take key" || answer === "t key") {
+      //     currentroomInv.classroom_key.take();
+      //     playerInventory.push(currentroomInv.classroom_key);
+      //   }
+      // }
     }
   }
 }
