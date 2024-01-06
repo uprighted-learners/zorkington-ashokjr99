@@ -173,22 +173,25 @@ async function start() {
     currentRoom.description;
     let currentroomInv = roomInventory[currentRoom];
     let answer = await ask(currentroomInv.description);
-    if ((answer === "interact door", "i door")) {
+    let action = keyAdd(answer);
+    console.log(action);
+    // let questionToPlayer = await ask("What do you want to do?");
+    if (answer === "interact door" || answer === "i door") {
       currentroomInv.door.interact();
-    } else if ((answer === "look door", "l door")) {
+    } else if (answer === "look door" || answer === "l door") {
       currentroomInv.door.look();
     } else if (
-      (answer === "interact windows",
-      "interact window",
-      "i window",
-      "i windows")
+      answer === "interact windows" ||
+      answer === "interact window" ||
+      answer === "i window" ||
+      answer === "i windows"
     ) {
       currentroomInv.windows.interact();
     }
 
-    if (answer === "interact desk") {
+    if (answer === "interact desk" || "i desk") {
       currentroomInv.desk.look();
-      if ((answer === "take key", "t key")) {
+      if (answer === "take key" || answer === "t key") {
         currentroomInv.classroom_key.take();
         playerInventory.push(currentroomInv.classroom_key);
         delete currentroomInv.classroom_key;
@@ -216,3 +219,13 @@ function myRoom(newRoom) {
     console.log("You cannot jump rooms!");
   }
 }
+
+function keyAdd(add) {
+  let split = add.split(" ");
+  let action = split[0];
+  return action;
+}
+
+// let stringy = "interact door";
+
+// console.log(keyAdd(stringy));
