@@ -311,19 +311,25 @@ async function start() {
     // let questionToPlayer = await ask("What do you want to do?");
     if (action === "interact" || action === "i") {
       currentroomInv[objectUse].interact();
-      console.log(playerInventory);
-      console.log(classroomInventory);
+      // console.log(playerInventory);
+      // console.log(classroomInventory);
     } else if (action === "look" || action === "l") {
       currentroomInv[objectUse].look();
-
-      // if (answer === "interact desk" || "i desk") {
-      //   currentroomInv.desk.look();
-      //   if (answer === "take key" || answer === "t key") {
-      //     currentroomInv.classroom_key.take();
-      //     playerInventory.push(currentroomInv.classroom_key);
-      //   }
-      // }
+    } else if (
+      action === "move" ||
+      action === "m" ||
+      action === "move to" ||
+      action === "m to"
+    ) {
+      currentRoomInv[objectUse].myRoom(); //!!!!!!!
     }
+    // if (answer === "interact desk" || "i desk") {
+    //   currentroomInv.desk.look();
+    //   if (answer === "take key" || answer === "t key") {
+    //     currentroomInv.classroom_key.take();
+    //     playerInventory.push(currentroomInv.classroom_key);
+    //   }
+    // }
   }
 }
 
