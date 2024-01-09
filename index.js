@@ -136,34 +136,35 @@ let hallwayInventory = {
     look() {
       console.log(`${this.description}`);
     },
-    interact() {
-      console.log(
-        "Nice! It opened up. Inside the safe are the library keys that I can use to move forward."
-      );
-      console.log("Library keys have now been added to your inventory.");
-      playerInventory["library_key"] = {
-        name: "Library key",
-        description: "A key to get into the library",
-        key: "library_key",
-        look() {
-          console.log(`${this.description}`);
-        },
-      };
-      delete hallwayInventory.library_key;
-    },
-  },
+    //   keyPad() {
+    //     console.log(
+    //       "Nice! It opened up. Inside the safe are the library keys that I can use to move forward."
+    //     );
+    //     console.log("Library keys have now been added to your inventory.");
+    //     playerInventory["library_key"] = {
+    //       name: "Library key",
+    //       description: "A key to get into the library",
+    //       key: "library_key",
+    //       look() {
+    //         console.log(`${this.description}`);
+    //       },
+    //     };
+    //     delete hallwayInventory.library_key;
+    //   },
+    // },
 
-  library_key: {
-    name: "Library key",
-    description: "A key to get into the library",
-    key: "library_key",
-    look() {
-      console.log(`${this.description}`);
+    library_key: {
+      name: "Library key",
+      description: "A key to get into the library",
+      key: "library_key",
+      look() {
+        console.log(`${this.description}`);
+      },
     },
-  },
 
-  description:
-    "There is a door here that leads into the library, a safe that is sitting in the corner, and a handwritten sign.",
+    description:
+      "There is a door here that leads into the library, a safe that is sitting in the corner, and a handwritten sign.",
+  },
 };
 
 let libraryInventory = {
@@ -324,6 +325,25 @@ async function start() {
       myRoom(objectUse);
     } else if (validInvCommands.includes(answer)) {
       console.log(playerInventory);
+    } else if (answer === "k" || answer === "keypad" || answer === "key-pad") {
+      // currentroomInv[objectUse].keyPad()
+      console.log("Enter the pin...");
+      if (answer === "96024") {
+        console.log(
+          "it opens up. Inside is the prinicpal's key. You have added the prinicpal's key to your inventory."
+        );
+        playerInventory["library_key"] = {
+          name: "Library key",
+          description: "A key to get into the library",
+          key: "library_key",
+          look() {
+            console.log(`${this.description}`);
+          },
+        };
+        delete hallwayInventory.library_key;
+      } else {
+        console.log("the safe remains shut. I need to find that passcode.");
+      }
     } else {
       console.log("You cannot do that. Try again.");
     }
