@@ -108,10 +108,10 @@ let hallwayInventory = {
     },
   },
 
-  handwritten_sign: {
-    name: "Handwritten Sign",
+  sign: {
+    name: "Sign",
     description:
-      "A handwritten sign. It has six digits on there... 96024? I better jot this down, incase I need it later.",
+      "A sign. It has six digits on there... 96024? I better jot this down, incase I need it later.",
     look() {
       console.log(`${this.description}`);
     },
@@ -318,18 +318,15 @@ async function start() {
     } else if (
       action === "move" ||
       action === "m" ||
-      action === "move to" ||
-      action === "m to"
+      action === "move-to" ||
+      action === "m-to"
     ) {
-      currentRoomInv[objectUse].myRoom(); //!!!!!!!
+      myRoom(objectUse);
+    } else if (validInvCommands.includes(answer)) {
+      console.log(playerInventory);
+    } else {
+      console.log("You cannot do that. Try again.");
     }
-    // if (answer === "interact desk" || "i desk") {
-    //   currentroomInv.desk.look();
-    //   if (answer === "take key" || answer === "t key") {
-    //     currentroomInv.classroom_key.take();
-    //     playerInventory.push(currentroomInv.classroom_key);
-    //   }
-    // }
   }
 }
 
@@ -339,8 +336,8 @@ function myRoom(newRoom) {
   let validTransitions = schoolRooms[currentRoom];
 
   if (validTransitions.includes(newRoom)) {
-    let newRoomInventory = roomInventory(newRoom);
-    if (newRoomInventory.door.locked === false) {
+    let currentroomInv = roomInventory[currentRoom];
+    if (currentroomInv.door.locked === false) {
       currentRoom = newRoom;
       console.log("You are now in:", currentRoom);
     } else {
